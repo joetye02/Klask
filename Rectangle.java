@@ -14,7 +14,7 @@ public class Rectangle
 	private double yPosition;			// The Y coordinate of this Rectangle
 	private double width;				// The width of this Rectangle
 	private double height;				// The height of this Rectangle
-	private int layer;					// The layer of this ball is on.
+	private int layer;				// The layer this Rectangle is on.
 	private String colour;				// The colour of this Rectangle
 
 										// Permissable colours are:
@@ -48,7 +48,7 @@ public class Rectangle
 	 * @param w The width of the Rectangle (in pixels)
 	 * @param h The height of the Rectangle (in pixels)
 	 * @param col The colour of the Rectangle (Permissable colours are: BLACK, BLUE, CYAN, DARKGREY, GREY, GREEN, LIGHTGREY, MAGENTA, ORANGE, PINK, RED, WHITE, YELLOW or #RRGGBB)
-	 * @param layer The layer this ball is to be drawn on. Objects with a higher layer number are always drawn on top of those with lower layer numbers.
+	 * @param layer The layer this Rectangle is to be drawn on. Objects with a higher layer number are always drawn on top of those with lower layer numbers.
 	 */
 	public Rectangle(double x, double y, double w, double h, String col, int layer)
 	{
@@ -133,8 +133,8 @@ public class Rectangle
 	}
 
 	/**
-	 * Obtains the layer of this Ball.
-	 * @return the layer of this Ball.
+	 * Obtains the layer of this Rectangle.
+	 * @return the layer of this Rectangle.
 	 */
 	public int getLayer()
 	{
@@ -157,5 +157,28 @@ public class Rectangle
 	public void setColour(String c)
 	{
 		colour = c;
+	}
+
+	/**
+	 * Moves this Rectangle by the given amount.
+	 * 
+	 * @param dx the distance to move on the x axis (in pixels)
+	 * @param dy the distance to move on the y axis (in pixels)
+	 */
+	public void move(double dx, double dy)
+	{
+		xPosition += dx;
+		yPosition += dy;
+	}
+
+	/**
+	 * Determines if this Rectangle is overlapping the given rectangle.
+	 * 
+	 * @param r the rectangle to test for collision
+	 * @return true of this rectangle is overlapping the rectangle r, false otherwise.
+	 */
+	public boolean collides(Rectangle r)
+	{
+		return (xPosition + width > r.xPosition && xPosition < r.xPosition + r.width) && (yPosition + height > r.yPosition && yPosition < r.yPosition + r.height);
 	}
 }
