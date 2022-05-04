@@ -317,7 +317,7 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 	 *
 	 * @param o the object to add to the drawlist.
 	 */
-	private void addThing(Object o, int layer)
+	public void addThing(Object o, int layer)
 	{
 		boolean added = false;
 
