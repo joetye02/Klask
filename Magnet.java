@@ -12,7 +12,7 @@ public class Magnet {
 
     }
     private void makeBall(){
-        theMagnet = new Ball(x, y, 6, "WHITE");
+        theMagnet = new Ball(x, y, 6, "WHITE", layer);
     }
     public void addCompToGameArena(GameArena g){
         g.addThing(theMagnet, layer);

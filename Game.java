@@ -5,6 +5,7 @@ public class Game{
     Board gameBoard;
     Striker player1, player2;
     Goal p1G, p2G;
+    Ball gameBall; 
     Magnet[] ballMagnets;
 
 
@@ -15,37 +16,36 @@ public class Game{
         makeStrikers();
         makeGoals();
         makeMagnets();
+        makeGameBall();
     
-        int x = 1;
+        
         while (true){
             try{
-            Thread.sleep(100);
-            tests(x);
-            if( gameFrame.upPressed() == true){
-                System.out.println("UP");
-                player1.moveUp();
-                player1.addCompToGameArena(gameFrame);
-               gameFrame.run();
+            Thread.sleep(10);
+                player1.checkMovement(gameFrame);
+                player2.checkMovement(gameFrame);
+
+               
+               
             }
-            }
+            
             catch(InterruptedException e)
             {
+                System.out.println("hi");
                 // this part is executed when an exception (in this example InterruptedException) occurs
             }
-            x++;
+            
         }
     }
-    private void tests(int x){
-        System.out.println(x);
-    }
+  
     private void makeBoard(){
         gameBoard = new Board();
         gameBoard.addCompToGameArena(gameFrame);
     }
 
     private void makeStrikers(){
-        player1 = new Striker(gameBoard.getWidth() / 4 + gameBoard.getXY(), gameBoard.getHeight() / 2 + gameBoard.getXY(), 4);
-        player2 = new Striker((gameBoard.getWidth() / 4) + (gameBoard.getWidth() / 2) + gameBoard.getXY(), (gameBoard.getHeight() / 2) + gameBoard.getXY() , 4);
+        player1 = new Striker(gameBoard.getWidth() / 4 + gameBoard.getXY(), gameBoard.getHeight() / 2 + gameBoard.getXY(), 5, 1);
+        player2 = new Striker((gameBoard.getWidth() / 4) + (gameBoard.getWidth() / 2) + gameBoard.getXY(), (gameBoard.getHeight() / 2) + gameBoard.getXY() , 5, 2);
         player1.addCompToGameArena(gameFrame);
         player2.addCompToGameArena(gameFrame);
         
@@ -57,18 +57,18 @@ public class Game{
         p2G.addCompToGameArena(gameFrame);
     }
     private void makeMagnets(){
-            
-
-
-
         int YPosCounter = 0;
         ballMagnets = new Magnet[3];
         for (int x = 0; x < 3; x++){
-            ballMagnets[x] = new Magnet(gameBoard.getHalfWayX(), gameBoard.getHalfWayY() + YPosCounter, 6);
+            ballMagnets[x] = new Magnet(gameBoard.getHalfWayX(), gameBoard.getHalfWayY() + YPosCounter, 14);
             ballMagnets[x].addCompToGameArena(gameFrame);
             switch (x){case 0: YPosCounter = -70; case 1: YPosCounter *= -1;}
             System.out.println("YPosCounter: " + YPosCounter);
         }
+    }
+    private void makeGameBall(){
+        gameBall = new Ball(gameBoard.getHalfWayX(), gameBoard.getXY() + 40, 10, "YELLOW", 8);
+        gameFrame.addThing(gameBall, 6);
     }
     
 }
