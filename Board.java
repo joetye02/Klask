@@ -3,6 +3,10 @@ public class Board{
     Rectangle gameBoard;
     Rectangle gameBorder;
 
+    final static int WIDTH = 610;
+    final static int HEIGHT = 320;
+    final static int XY = 165;
+
     Line halfWay;
 
     Board(){
@@ -16,7 +20,7 @@ public class Board{
         gameBorder = new Rectangle(150, 150, 640, 350, "GREY");
     }
     private void addgameBoard(){
-        gameBoard = new Rectangle(165, 165, 610, 320, "BLUE");
+        gameBoard = new Rectangle(165, 165, WIDTH, 320, "BLUE");
     }
     private void addHalfWayLine(){
         halfWay = new Line((gameBoard.getWidth() / 2) + gameBoard.getXPosition(),//X coordinate for the Centre of the game board.
@@ -31,22 +35,25 @@ public class Board{
         g.addThing(halfWay, 5);
     }
     public int getWidth(){
-        return 610;
+        return WIDTH;
     }
     public int getHeight(){
-        return 320;
+        return HEIGHT;
     }
     public int getXY(){
-        return 165;
+        return XY;
     }
     public int getHalfWayX(){
-        return (getWidth() / 2) + getXY();
+        return (WIDTH / 2) + XY;
     }
     public int getHalfWayY(){
-        return (getHeight() / 2) + getXY();
+        return (HEIGHT / 2) + XY;
     }
     public int getEndOfBoardX(){
-        return getXY() + getWidth();
+        return XY + WIDTH;
+    }
+    public int getEndOfBoardY(){
+        return XY + HEIGHT;
     }
     
     
