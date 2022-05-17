@@ -1,13 +1,16 @@
 import static java.util.concurrent.TimeUnit.*;
 public class Game{
 
-    GameArena gameFrame;
-    Board gameBoard;
-    Striker player1, player2;
-    Goal p1G, p2G;
-    Ball gameBall; 
-    Magnet[] ballMagnets;
+    private GameArena gameFrame;
+    private Board gameBoard;
+    private Striker player1, player2;
+    private Goal p1G, p2G;
+    private Magnet[] ballMagnets;
+    private Collision hit;
 
+    private Ball gameBall; 
+    private int gameBallXSpeed = 0;
+    private int gameBallYSpeed = 0;
 
 
     public Game(){
@@ -25,8 +28,17 @@ public class Game{
                 player1.checkMovement(gameFrame);
                 player2.checkMovement(gameFrame);
 
-               
-               
+                player1.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);
+                player2.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);
+                
+                if (gameBall.collides(player1.getBase()) == true){
+                    hit = new Collision(player1.getBase().getXPosition(), gameBall.getXPosition(), player1.getBase().getYPosition(), gameBall.getYPosition(),
+                                        player1.getXSpeed(), this.gameBallXSpeed, player1.getYSpeed(), this.gameBallYSpeed);
+                    
+                }else if (gameBall.collides(player2.getBase()) == true){
+                    hit = new Collision();
+                }
+                    
             }
             
             catch(InterruptedException e)
@@ -70,5 +82,6 @@ public class Game{
         gameBall = new Ball(gameBoard.getHalfWayX(), gameBoard.getXY() + 40, 10, "YELLOW", 8);
         gameFrame.addThing(gameBall, 6);
     }
+    
     
 }

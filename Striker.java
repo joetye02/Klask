@@ -3,6 +3,7 @@ public class Striker{
     Ball head;
     Rectangle neck;
 
+<<<<<<< HEAD
     int x;
     int y;
     int width = 4;
@@ -11,11 +12,27 @@ public class Striker{
     int player; // 1 = p1, 2 = p2
 
     
+=======
+    private int x;
+    private int y;
+    private int width = 4;
+    private int height = 10;
+    private int layer;
+    private int player; // 1 = p1, 2 = p2
+    private int xSpeed;
+    private int ySpeed;
+    private char direction;
+
+>>>>>>> 8518674e7455d78984526c701794058c27ca39b9
     public Striker(int x, int y, int layer, int player){
         this.x = x;
         this.y = y;
         this.layer = layer;
         this.player = player;
+        //this.xSpeed = xSpeed;
+        //this.ySpeed = ySpeed;
+
+
         drawHead();
         drawNeck();
         drawBase();
@@ -52,6 +69,17 @@ public class Striker{
             }
         
     }
+    public void checkWithinBoard(int XY, int endBoardX, int endBoardY, GameArena g){
+        if (this.base.getXPosition() < XY){
+            moveRight(g);
+        }else if (this.base.getYPosition() < XY){
+            moveDown(g);
+        }else if (this.base.getXPosition() > endBoardX){
+            moveLeft(g);
+        }else if (this.base.getYPosition() > endBoardY){
+            moveUp(g);
+        }
+    }
 
     public void addCompToGameArena(GameArena g){
         g.addThing(base, layer);
@@ -65,16 +93,30 @@ public class Striker{
         addCompToGameArena(g);
     }
     public void moveUp(GameArena g){   
-        resetCoords(0, -4, g);
+        resetCoords(0, -ySpeed, g);
+        direction = 'U';
     }
     public void moveLeft(GameArena g){   
-        resetCoords(-4, 0, g);
+        resetCoords(-xSpeed, 0, g);
+        direction = 'L';
     }
     public void moveRight(GameArena g){   
-        resetCoords(4, 0, g);
+        resetCoords(xSpeed, 0, g);
+        direction = 'R';
     }
     public void moveDown(GameArena g){   
-        resetCoords(0, 4, g);
+        resetCoords(0, ySpeed, g);
+        direction = 'D';
+    }
+    
+    public int getXSpeed(){
+        return this.xSpeed;
+    }
+    public int getYSpeed(){
+        return this.ySpeed;
+    }
+    public Ball getBase(){
+        return this.base;
     }
     
 
