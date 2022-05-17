@@ -23,8 +23,8 @@ public class Game{
     
         
         while (true){
-            try{
-            Thread.sleep(10);
+                gameFrame.pause();
+            
                 player1.checkMovement(gameFrame);//checks for keyboard inputs then updates the movement of the striker depending the input
                 player2.checkMovement(gameFrame);
 
@@ -34,32 +34,33 @@ public class Game{
                 player2.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);//board boundaries.
                 
                 if (gameBall.collides(player1.getBase()) == true){
-                    this.hit = new Collision(player1.getBase().getXPosition(), gameBall.getXPosition(), player1.getBase().getYPosition(), gameBall.getYPosition(),
-                                        player1.getXSpeed(), this.gameBallXSpeed, player1.getYSpeed(), this.gameBallYSpeed);
+                    this.hit = new Collision(player1.getBase().getXPosition(), gameBall.getXPosition(), player1.getBase().getYPosition(), gameBall.getYPosition(), player1.getXSpeed(), this.gameBallXSpeed, player1.getYSpeed(), this.gameBallYSpeed);
                     gameBallXSpeed = hit.getXSpeed2();
                     gameBallYSpeed = hit.getYSpeed2();
                     
-                    
+                 
                 }else if (gameBall.collides(player2.getBase()) == true){
-                    //hit = new Collision();
+                    this.hit = new Collision(player2.getBase().getXPosition(), gameBall.getXPosition(), player2.getBase().getYPosition(), gameBall.getYPosition(), player2.getXSpeed(), this.gameBallXSpeed, player2.getYSpeed(), this.gameBallYSpeed);
+                    gameBallXSpeed = hit.getXSpeed2();
+                    gameBallYSpeed = hit.getYSpeed2();
                 }
-               
-
+                
+                gameBallXSpeed *= 0.9970;
+                gameBallYSpeed *= 0.9970;
 
                 deflectArenaWalls();
                 updateGameBall();
+                
                 player1.resetSpeeds();
                 player2.resetSpeeds();
+                
             }
             
-            catch(InterruptedException e)
-            {
-                System.out.println("hi");
-                // this part is executed when an exception (in this example InterruptedException) occurs
-            }
+            
+            
             
         }
-    }
+    
   
     private void makeBoard(){
         gameBoard = new Board();
@@ -101,17 +102,14 @@ public class Game{
     private void deflectArenaWalls(){
         
 
-        if (this.gameBall.getXPosition() - 2 < gameBoard.getXY()){
-            Line tempLine = new Line(gameBoard.getXY(), gameBoard.getXY(), gameBoard.getXY(), gameBoard.getEndOfBoardY(), 3, "WHITE");
-            gameFrame.addThing(tempLine, 1);
-            this.borderHit = new Collision(tempLine.getXStart(), gameBall.getXPosition(), gameBall.getYPosition(), gameBall.getYPosition(),
-            2, this.gameBallXSpeed, 2, this.gameBallYSpeed);
+        if (this.gameBall.getXPosition() <= gameBoard.getXY()){
+            gameBallXSpeed = -gameBallXSpeed;
         }else if(this.gameBall.getYPosition() <= gameBoard.getXY()){
-
+            gameBallYSpeed = -gameBallYSpeed;
         }else if(this.gameBall.getXPosition() >= gameBoard.getEndOfBoardX()){
-
+            gameBallXSpeed = -gameBallXSpeed;
         }else if(this.gameBall.getYPosition() >= gameBoard.getEndOfBoardY()){
-
+            gameBallYSpeed = -gameBallYSpeed;
         }
 
         
