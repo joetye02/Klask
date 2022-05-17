@@ -3,8 +3,8 @@ public class Board{
     Rectangle gameBoard;
     Rectangle gameBorder;
 
-    final static int WIDTH = 610;
-    final static int HEIGHT = 320;
+    final static int WIDTH = 610 * 3;
+    final static int HEIGHT = 320 * 2;
     final static int XY = 165;
 
     Line halfWay;
@@ -17,10 +17,10 @@ public class Board{
     }
 
     private void addBorder(){
-        gameBorder = new Rectangle(150, 150, 640, 350, "GREY");
+        gameBorder = new Rectangle(150, 150, (WIDTH + 30), (HEIGHT + 30), "GREY");
     }
     private void addgameBoard(){
-        gameBoard = new Rectangle(165, 165, WIDTH, 320, "BLUE");
+        gameBoard = new Rectangle(165, 165, WIDTH, HEIGHT , "BLUE");
     }
     private void addHalfWayLine(){
         halfWay = new Line((gameBoard.getWidth() / 2) + gameBoard.getXPosition(),//X coordinate for the Centre of the game board.

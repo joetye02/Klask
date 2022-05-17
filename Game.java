@@ -14,7 +14,7 @@ public class Game{
 
 
     public Game(){
-        gameFrame = new GameArena(1000,700);
+        gameFrame = new GameArena(2400,1000);
         makeBoard();
         makeStrikers();
         makeGoals();
@@ -33,23 +33,26 @@ public class Game{
                 player1.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);//checks the striker is within the game...
                 player2.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);//board boundaries.
                 
-                if (gameBall.collides(player1.getBase()) == true){
+                if (gameBall.collides(player1.getBase()) == true){// player 1 collision with gameBall
                     this.hit = new Collision(player1.getBase().getXPosition(), gameBall.getXPosition(), player1.getBase().getYPosition(), gameBall.getYPosition(), player1.getXSpeed(), this.gameBallXSpeed, player1.getYSpeed(), this.gameBallYSpeed);
                     gameBallXSpeed = hit.getXSpeed2();
                     gameBallYSpeed = hit.getYSpeed2();
                     
                  
-                }else if (gameBall.collides(player2.getBase()) == true){
+                }else if (gameBall.collides(player2.getBase()) == true){// player 2 collision with gameBall
                     this.hit = new Collision(player2.getBase().getXPosition(), gameBall.getXPosition(), player2.getBase().getYPosition(), gameBall.getYPosition(), player2.getXSpeed(), this.gameBallXSpeed, player2.getYSpeed(), this.gameBallYSpeed);
                     gameBallXSpeed = hit.getXSpeed2();
                     gameBallYSpeed = hit.getYSpeed2();
                 }
+                checkMagnetCollision();
                 
                 gameBallXSpeed *= 0.9970;
                 gameBallYSpeed *= 0.9970;
 
                 deflectArenaWalls();
                 updateGameBall();
+
+               
                 
                 player1.resetSpeeds();
                 player2.resetSpeeds();
@@ -68,8 +71,8 @@ public class Game{
     }
 
     private void makeStrikers(){
-        player1 = new Striker(gameBoard.getWidth() / 4 + gameBoard.getXY(), gameBoard.getHeight() / 2 + gameBoard.getXY(), 5, 1);
-        player2 = new Striker((gameBoard.getWidth() / 4) + (gameBoard.getWidth() / 2) + gameBoard.getXY(), (gameBoard.getHeight() / 2) + gameBoard.getXY() , 5, 2);
+        player1 = new Striker(gameBoard.getWidth() / 4 + gameBoard.getXY(), gameBoard.getHeight() / 2 + gameBoard.getXY(), 12, 1);
+        player2 = new Striker((gameBoard.getWidth() / 4) + (gameBoard.getWidth() / 2) + gameBoard.getXY(), (gameBoard.getHeight() / 2) + gameBoard.getXY() , 12, 2);
         player1.addCompToGameArena(gameFrame);
         player2.addCompToGameArena(gameFrame);
         
@@ -84,20 +87,20 @@ public class Game{
         int YPosCounter = 0;
         ballMagnets = new Magnet[3];
         for (int x = 0; x < 3; x++){
-            ballMagnets[x] = new Magnet(gameBoard.getHalfWayX(), gameBoard.getHalfWayY() + YPosCounter, 14);
+            ballMagnets[x] = new Magnet(gameBoard.getHalfWayX(), gameBoard.getHalfWayY() + YPosCounter, 7);
             ballMagnets[x].addCompToGameArena(gameFrame);
-            switch (x){case 0: YPosCounter = -70; case 1: YPosCounter *= -1;}
+            switch (x){case 0: YPosCounter = -180; case 1: YPosCounter *= -1;}
             System.out.println("YPosCounter: " + YPosCounter);
         }
     }
     private void makeGameBall(){
-        gameBall = new Ball(gameBoard.getHalfWayX(), gameBoard.getXY() + 40, 10, "YELLOW", 8);
+        gameBall = new Ball(gameBoard.getHalfWayX(), gameBoard.getXY() + 40, 25, "YELLOW", 8);
         gameFrame.addThing(gameBall, 6);
     }
     private void updateGameBall(){
 
         gameBall.move(gameBallXSpeed, gameBallYSpeed);
-        gameFrame.addThing(gameBall, 8);
+        //gameFrame.addThing(gameBall, 8);
     }
     private void deflectArenaWalls(){
         
@@ -112,6 +115,24 @@ public class Game{
             gameBallYSpeed = -gameBallYSpeed;
         }
 
+        
+    }
+    private void updateMagnet(){
+        for(int x = 0; x < 3; x++){
+            ballMagnets[x].updateMagnet(player1, player2);
+        }
+    }
+    private void checkMagnetCollision(){
+        updateMagnet();
+        for(int x = 0; x < 3; x++){
+            if (player1.getBase().collides(ballMagnets[x].getMagnet()) == true){
+                
+                ballMagnets[x].attractToStriker(player1);
+            }
+            if (player2.getBase().collides(ballMagnets[x].getMagnet()) == true){
+                ballMagnets[x].attractToStriker(player2);
+            }
+        }
         
     }
     

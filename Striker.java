@@ -27,14 +27,14 @@ public class Striker{
         drawBase();
     }
     private void drawBase(){//called by contructor to build the bottom of the striker
-        base = new Ball(x + 4, y + 28, 20, "BLACK");
+        base = new Ball(x + 4, y + 40, 40, "BLACK");
         
     }
     private void drawNeck(){//called by contructor to build the neck of the striker
-        neck = new Rectangle(x, y, 8, 24, "BLACK");
+        neck = new Rectangle(x - 4, y - 16, 16, 40, "BLACK");
     }
     private void drawHead(){//clalled by contructor to build the head of the striker
-        head = new Ball(x + 4, y, 8, "BLACK");
+        head = new Ball(x + 4, y - 20, 20, "BLACK");
     }
     public void checkMovement(GameArena g){
 
@@ -89,23 +89,23 @@ public class Striker{
         addCompToGameArena(g);
     }
     public void moveUp(GameArena g){ 
-        ySpeed= -3;
+        ySpeed= -10;
         resetCoords(g);
         direction = 'U';
     }
     public void moveLeft(GameArena g){  
-        xSpeed = -3;
+        xSpeed = -10;
         resetCoords(g);
         direction = 'L';
 
     }
     public void moveRight(GameArena g){  
-        xSpeed = 3; 
+        xSpeed = 10; 
         resetCoords(g);
         direction = 'R';
     }
     public void moveDown(GameArena g){ 
-        ySpeed= 3;  
+        ySpeed= 10;  
         resetCoords(g);
         direction = 'D';
     }
@@ -128,6 +128,15 @@ public class Striker{
     }
     public Ball getBase(){
         return this.base;
+    }
+    public int getPlayer(){
+        return this.player;
+    }
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
     }
     
 
