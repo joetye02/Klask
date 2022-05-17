@@ -3,27 +3,16 @@ public class Striker{
     Ball head;
     Rectangle neck;
 
-<<<<<<< HEAD
-    int x;
-    int y;
-    int width = 4;
-    int height = 10;
-    int layer;
-    int player; // 1 = p1, 2 = p2
-
-    
-=======
     private int x;
     private int y;
     private int width = 4;
     private int height = 10;
     private int layer;
     private int player; // 1 = p1, 2 = p2
-    private int xSpeed;
-    private int ySpeed;
+    private double xSpeed;
+    private double ySpeed;
     private char direction;
 
->>>>>>> 8518674e7455d78984526c701794058c27ca39b9
     public Striker(int x, int y, int layer, int player){
         this.x = x;
         this.y = y;
@@ -52,19 +41,26 @@ public class Striker{
         
             if (g.upPressed() == true && this.player == 2){
                 this.moveUp(g);
-            }else if (g.rightPressed() == true && this.player == 2){
+            }
+            if (g.rightPressed() == true && this.player == 2){
                 this.moveRight(g);
-            }else if (g.leftPressed() == true && this.player == 2){
+            }
+            if (g.leftPressed() == true && this.player == 2){
                 this.moveLeft(g);
-            }else if (g.downPressed() == true && this.player == 2){
+            }
+            if (g.downPressed() == true && this.player == 2){
                 this.moveDown(g);
-            }else if (g.letterPressed('W') == true && this.player == 1){
+            }
+            if (g.letterPressed('W') == true && this.player == 1){
                 this.moveUp(g);
-            }else if (g.letterPressed('A') == true && this.player == 1){
+            }
+            if (g.letterPressed('A') == true && this.player == 1){
                 this.moveLeft(g);
-            }else if (g.letterPressed('S') == true && this.player == 1){
+            }
+            if (g.letterPressed('S') == true && this.player == 1){
                 this.moveDown(g);
-            }else if (g.letterPressed('D') == true && this.player == 1){
+            }
+            if (g.letterPressed('D') == true && this.player == 1){
                 this.moveRight(g);
             }
         
@@ -86,34 +82,49 @@ public class Striker{
         g.addThing(head, layer);
         g.addThing(neck, layer);
     }
-    public void resetCoords(int xChange, int yChange, GameArena g){
-        base.move(xChange, yChange);
-        neck.move(xChange, yChange);
-        head.move(xChange, yChange);
+    public void resetCoords(GameArena g){
+        base.move(xSpeed, ySpeed);
+        neck.move(xSpeed, ySpeed);
+        head.move(xSpeed, ySpeed);
         addCompToGameArena(g);
     }
-    public void moveUp(GameArena g){   
-        resetCoords(0, -ySpeed, g);
+    public void moveUp(GameArena g){ 
+        ySpeed= -3;
+        resetCoords(g);
         direction = 'U';
     }
-    public void moveLeft(GameArena g){   
-        resetCoords(-xSpeed, 0, g);
+    public void moveLeft(GameArena g){  
+        xSpeed = -3;
+        resetCoords(g);
         direction = 'L';
+
     }
-    public void moveRight(GameArena g){   
-        resetCoords(xSpeed, 0, g);
+    public void moveRight(GameArena g){  
+        xSpeed = 3; 
+        resetCoords(g);
         direction = 'R';
     }
-    public void moveDown(GameArena g){   
-        resetCoords(0, ySpeed, g);
+    public void moveDown(GameArena g){ 
+        ySpeed= 3;  
+        resetCoords(g);
         direction = 'D';
     }
     
-    public int getXSpeed(){
+    public double getXSpeed(){
         return this.xSpeed;
     }
-    public int getYSpeed(){
+    public double getYSpeed(){
         return this.ySpeed;
+    }
+    public void setXSpeed(double speed){
+       this.xSpeed = speed;
+    }
+    public void setYSpeed(double speed){
+        this.ySpeed = speed;
+    }
+    public void resetSpeeds(){
+        this.xSpeed = 0;
+        this.ySpeed = 0;
     }
     public Ball getBase(){
         return this.base;

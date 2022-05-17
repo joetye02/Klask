@@ -1,12 +1,22 @@
-public class collision{
+public class Collision{
     
      // The position and speed of each of the two balls in the x and y axis before collision.
     // YOU NEED TO FILL THESE VALUES IN AS APPROPRIATE...
     double xPosition1, xPosition2, yPosition1, yPosition2;
     double xSpeed1, xSpeed2, ySpeed1, ySpeed2;
 
-    public collision(){
+    public Collision(double xPosition1, double xPosition2, double yPosition1, double yPosition2,
+                    double xSpeed1, double xSpeed2, double ySpeed1, double ySpeed2){
+        this.xPosition1 = xPosition1;
+        this.xPosition2 = xPosition2;
+        this.yPosition1 = yPosition1;
+        this.yPosition2 = yPosition2;
+        this.xSpeed1 = xSpeed1;
+        this.xSpeed2 = xSpeed2;
+        this.ySpeed1 = ySpeed1;
+        this.ySpeed2 = ySpeed2;
 
+        deflect();
     }
     public void deflect()
  {
@@ -68,5 +78,16 @@ public class collision{
     }
     return result;
  }
-
+    public double getXSpeed1(){
+        return this.xSpeed1;
+    }
+    public double getXSpeed2(){
+        return this.xSpeed2;
+    }
+    public double getYSpeed1(){
+        return this.ySpeed1;
+    }
+    public double getYSpeed2(){
+        return this.ySpeed2;
+    }
 }

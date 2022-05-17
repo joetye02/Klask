@@ -6,11 +6,11 @@ public class Game{
     private Striker player1, player2;
     private Goal p1G, p2G;
     private Magnet[] ballMagnets;
-    private Collision hit;
+    public Collision hit, borderHit;
 
     private Ball gameBall; 
-    private int gameBallXSpeed = 0;
-    private int gameBallYSpeed = 0;
+    private double gameBallXSpeed = 0;
+    private double gameBallYSpeed = 0;
 
 
     public Game(){
@@ -25,20 +25,31 @@ public class Game{
         while (true){
             try{
             Thread.sleep(10);
-                player1.checkMovement(gameFrame);
+                player1.checkMovement(gameFrame);//checks for keyboard inputs then updates the movement of the striker depending the input
                 player2.checkMovement(gameFrame);
 
-                player1.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);
-                player2.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);
+                
+
+                player1.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);//checks the striker is within the game...
+                player2.checkWithinBoard(gameBoard.getXY(), gameBoard.getEndOfBoardX(), gameBoard.getEndOfBoardY(), gameFrame);//board boundaries.
                 
                 if (gameBall.collides(player1.getBase()) == true){
-                    hit = new Collision(player1.getBase().getXPosition(), gameBall.getXPosition(), player1.getBase().getYPosition(), gameBall.getYPosition(),
+                    this.hit = new Collision(player1.getBase().getXPosition(), gameBall.getXPosition(), player1.getBase().getYPosition(), gameBall.getYPosition(),
                                         player1.getXSpeed(), this.gameBallXSpeed, player1.getYSpeed(), this.gameBallYSpeed);
+                    gameBallXSpeed = hit.getXSpeed2();
+                    gameBallYSpeed = hit.getYSpeed2();
+                    
                     
                 }else if (gameBall.collides(player2.getBase()) == true){
-                    hit = new Collision();
+                    //hit = new Collision();
                 }
-                    
+               
+
+
+                deflectArenaWalls();
+                updateGameBall();
+                player1.resetSpeeds();
+                player2.resetSpeeds();
             }
             
             catch(InterruptedException e)
@@ -82,6 +93,28 @@ public class Game{
         gameBall = new Ball(gameBoard.getHalfWayX(), gameBoard.getXY() + 40, 10, "YELLOW", 8);
         gameFrame.addThing(gameBall, 6);
     }
-    
+    private void updateGameBall(){
+
+        gameBall.move(gameBallXSpeed, gameBallYSpeed);
+        gameFrame.addThing(gameBall, 8);
+    }
+    private void deflectArenaWalls(){
+        
+
+        if (this.gameBall.getXPosition() - 2 < gameBoard.getXY()){
+            Line tempLine = new Line(gameBoard.getXY(), gameBoard.getXY(), gameBoard.getXY(), gameBoard.getEndOfBoardY(), 3, "WHITE");
+            gameFrame.addThing(tempLine, 1);
+            this.borderHit = new Collision(tempLine.getXStart(), gameBall.getXPosition(), gameBall.getYPosition(), gameBall.getYPosition(),
+            2, this.gameBallXSpeed, 2, this.gameBallYSpeed);
+        }else if(this.gameBall.getYPosition() <= gameBoard.getXY()){
+
+        }else if(this.gameBall.getXPosition() >= gameBoard.getEndOfBoardX()){
+
+        }else if(this.gameBall.getYPosition() >= gameBoard.getEndOfBoardY()){
+
+        }
+
+        
+    }
     
 }
