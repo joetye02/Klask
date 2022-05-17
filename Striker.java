@@ -9,6 +9,8 @@ public class Striker{
     int height = 10;
     int layer;
     int player; // 1 = p1, 2 = p2
+
+    
     public Striker(int x, int y, int layer, int player){
         this.x = x;
         this.y = y;
