@@ -11,17 +11,20 @@ public class Striker{
     private int player; // 1 = p1, 2 = p2
     private double xSpeed;
     private double ySpeed;
-    private char direction;
+
+    private boolean[] attachedMagnets = new boolean[3];
+   
 
     public Striker(int x, int y, int layer, int player){
         this.x = x;
         this.y = y;
         this.layer = layer;
         this.player = player;
+
         //this.xSpeed = xSpeed;
         //this.ySpeed = ySpeed;
 
-
+        resetAttachArray();
         drawHead();
         drawNeck();
         drawBase();
@@ -38,7 +41,6 @@ public class Striker{
     }
     public void checkMovement(GameArena g){
 
-        
             if (g.upPressed() == true && this.player == 2){
                 this.moveUp(g);
             }
@@ -65,6 +67,26 @@ public class Striker{
             }
         
     }
+    public boolean win(Magnet[] ballMagnets){
+        
+        int counter1 = 0;
+ 
+        for (int x=0;x<3;x++){
+            if (attachedMagnets[x] == true){
+                
+                counter1 += 1;
+            }
+            System.out.println(x + ":   " + attachedMagnets[x]);
+            System.out.println("MA1: " + counter1);
+            
+            
+        }
+        if (counter1 > 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public void checkWithinBoard(int XY, int endBoardX, int endBoardY, GameArena g){
         if (this.base.getXPosition() < XY){
             moveRight(g);
@@ -86,28 +108,34 @@ public class Striker{
         base.move(xSpeed, ySpeed);
         neck.move(xSpeed, ySpeed);
         head.move(xSpeed, ySpeed);
-        addCompToGameArena(g);
+ 
     }
     public void moveUp(GameArena g){ 
         ySpeed= -10;
         resetCoords(g);
-        direction = 'U';
+       
+        
     }
     public void moveLeft(GameArena g){  
         xSpeed = -10;
         resetCoords(g);
-        direction = 'L';
+      
 
     }
     public void moveRight(GameArena g){  
-        xSpeed = 10; 
+        xSpeed = 10;
         resetCoords(g);
-        direction = 'R';
+       
     }
     public void moveDown(GameArena g){ 
-        ySpeed= 10;  
+        ySpeed= 10; 
         resetCoords(g);
-        direction = 'D';
+        
+    }
+    private void resetAttachArray(){
+        for (int i = 0; i < 3; i++){
+            attachedMagnets[i] = false;
+        }
     }
     
     public double getXSpeed(){
@@ -138,6 +166,10 @@ public class Striker{
     public int getY(){
         return this.y;
     }
+    public void setAttachArray(int index, boolean b){
+        attachedMagnets[index] = b;
+    }
+    
     
 
 }

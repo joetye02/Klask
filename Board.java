@@ -3,8 +3,8 @@ public class Board{
     Rectangle gameBoard;
     Rectangle gameBorder;
 
-    final static int WIDTH = 610 * 3;
-    final static int HEIGHT = 320 * 2;
+    final static int WIDTH = 800 * 2;//default = 610
+    final static int HEIGHT = 400 * 2;//default = 320
     final static int XY = 165;
 
     Line halfWay;
