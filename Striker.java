@@ -67,7 +67,7 @@ public class Striker{
             }
         
     }
-    public boolean win(Magnet[] ballMagnets){
+    public boolean lost(Magnet[] ballMagnets){
         
         int counter1 = 0;
  
@@ -87,16 +87,25 @@ public class Striker{
             return false;
         }
     }
-    public void checkWithinBoard(int XY, int endBoardX, int endBoardY, GameArena g){
+    public void checkWithinBoard(int XY, int endBoardX, int endBoardY, GameArena g, int halfWayX){
         if (this.base.getXPosition() < XY){
             moveRight(g);
-        }else if (this.base.getYPosition() < XY){
+        }
+        if (this.base.getYPosition() < XY){
             moveDown(g);
-        }else if (this.base.getXPosition() > endBoardX){
+        }
+        if (this.base.getXPosition() > endBoardX){
             moveLeft(g);
-        }else if (this.base.getYPosition() > endBoardY){
+        }
+        if (this.base.getYPosition() > endBoardY){
             moveUp(g);
         }
+        if(this.player == 1 && this.base.getXPosition() >= halfWayX){
+            moveLeft(g);
+        }else if(this.player == 2 && this.base.getXPosition() <= halfWayX){
+            moveRight(g);
+        }
+
     }
 
     public void addCompToGameArena(GameArena g){
