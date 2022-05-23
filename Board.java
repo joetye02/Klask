@@ -3,6 +3,7 @@ public class Board{
     Rectangle gameBoard;
     Rectangle gameBorder;
 
+    //static values to be used when initializing other components and locating them relative to the game board
     final static int WIDTH = 800 * 2;//default = 610
     final static int HEIGHT = 400 * 2;//default = 320
     final static int XY = 165;
@@ -16,7 +17,7 @@ public class Board{
         addHalfWayLine();
     }
 
-    private void addBorder(){
+    private void addBorder(){//the grey border around the main board
         gameBorder = new Rectangle(150, 150, (WIDTH + 30), (HEIGHT + 30), "GREY");
     }
     private void addgameBoard(){
@@ -29,7 +30,7 @@ public class Board{
                             gameBoard.getHeight() + gameBoard.getYPosition(),// y coordinate for the bottom of the game board.
                             1, "GREY", 5);
     }
-    public void addCompToGameArena(GameArena g){
+    public void addCompToGameArena(GameArena g){//add the board components to game arena so they can be displayed
         g.addThing(gameBorder, 6);
         g.addThing(gameBoard, 5);
         g.addThing(halfWay, 5);
@@ -43,10 +44,10 @@ public class Board{
     public int getXY(){
         return XY;
     }
-    public int getHalfWayX(){
+    public int getHalfWayX(){// half way across the board
         return (WIDTH / 2) + XY;
     }
-    public int getHalfWayY(){
+    public int getHalfWayY(){//half way down the board
         return (HEIGHT / 2) + XY;
     }
     public int getEndOfBoardX(){

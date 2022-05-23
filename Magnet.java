@@ -52,6 +52,7 @@ public class Magnet {
         areaOfInstance.move(xm,ym);
     }
     
+    
     public double pushTo0(double num){
         if (num < -2){
             return num + 1;

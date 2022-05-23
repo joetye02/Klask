@@ -24,12 +24,12 @@ class Run{
         game1.makeYes(playAgainFrame);
 
         while(game1.getNewGame() == 0){
-            System.out.println("0");
+            //System.out.println("0");
         }
-        System.out.println("1 or 2");
+        //System.out.println("1 or 2");
         //
         }while(game1.getNewGame() != 2);
-        System.out.println("QUIT");
+       // System.out.println("QUIT");
         game1.getGameFrame().exit();
         
         

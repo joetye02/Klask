@@ -76,8 +76,8 @@ public class Striker{
                 
                 counter1 += 1;
             }
-            System.out.println(x + ":   " + attachedMagnets[x]);
-            System.out.println("MA1: " + counter1);
+            //System.out.println(x + ":   " + attachedMagnets[x]);
+            //System.out.println("MA1: " + counter1);
             
             
         }
@@ -87,6 +87,17 @@ public class Striker{
             return false;
         }
     }
+    public void resetPos(Board gameBoard){
+        int newXpos = 0;
+        if(player == 1){newXpos = 400;}else{newXpos = 1200;}
+        base.setXPosition(x + 4);
+        neck.setXPosition(x - 4);
+        head.setXPosition(x + 4);
+        base.setYPosition(y + 40);
+        neck.setYPosition( y - 16);
+        head.setYPosition(y - 20);
+    }
+    
     public void checkWithinBoard(int XY, int endBoardX, int endBoardY, GameArena g, int halfWayX){
         if (this.base.getXPosition() < XY){
             moveRight(g);
@@ -107,6 +118,8 @@ public class Striker{
         }
 
     }
+    
+    
 
     public void addCompToGameArena(GameArena g){
         g.addThing(base, layer);
